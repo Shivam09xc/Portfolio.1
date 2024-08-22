@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy 3D Image Slider</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider {
+            width: 500px;
+            height: 300px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide:nth-child(1) {
+            transform: translateZ(300px);
+        }
+
+        .slide:nth-child(2) {
+            transform: rotateY(60deg) translateZ(300px);
+        }
+
+        .slide:nth-child(3) {
+            transform: rotateY(120deg) translateZ(300px);
+        }
+
+        .slide:nth-child(4) {
+            transform: rotateY(180deg) translateZ(300px);
+        }
+
+        .slide:nth-child(5) {
+            transform: rotateY(240deg) translateZ(300px);
+        }
+
+        .slide:nth-child(6) {
+            transform: rotateY(300deg) translateZ(300px);
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slider">
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/nature" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/landscape" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/city" alt="Slide 3">
+            </div>
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/technology" alt="Slide 4">
+            </div>
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/abstract" alt="Slide 5">
+            </div>
+            <div class="slide">
+                <img src="https://unsplash.com/s/photos/animals" alt="Slide 6">
+            </div>
+        </div>
+        <div class="prev">&#10094;</div>
+        <div class="next">&#10095;</div>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+
+        let currentSlide = 0;
+
+        const updateSlide = () => {
+            const translate = -currentSlide * 120;
+            slider.style.transform = `rotateY(${translate}deg)`;
+        };
+
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        };
+
+        const prevSlide = () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        };
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        updateSlide();
+    </script>
+</body>
+</html>
